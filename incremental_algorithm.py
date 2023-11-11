@@ -46,14 +46,15 @@ class Plot:
     def createHull(self, pts:list):
         hull = []
         for i,p in enumerate(pts):
-            if i == 0:
-                hull.append(p)
-                continue
-            if i == 1:
+            if i == 0 or i == 1:
                 hull.append(p)
                 continue
             while len(hull) >= 2:
-                if self.calculateDeterminant(p, hull[-2], hull[-1]) > 0:
+                det = self.calculateDeterminant(p, hull[-2], hull[-1])
+                if det > 0:
+                    hull.pop()
+                elif det == 0:
+                    # Handle collinear points
                     hull.pop()
                 else:
                     break
@@ -73,14 +74,11 @@ if __name__ == "__main__":
     MAX_Y = 30
     NUM_POINTS = 20
     
-    points = []
-    for i in range(0, NUM_POINTS):
-        new_point = Point(x=np.random.randint(1, MAX_X-1), 
-                   y=np.random.randint(1, MAX_Y-1))
-        if new_point in points:
-            NUM_POINTS += 1
-            continue
-        points.append(new_point)
+    points_set = set()
+    while len(points_set) < NUM_POINTS:
+        new_point = Point(x=np.random.randint(1, MAX_X-1), y=np.random.randint(1, MAX_Y-1))
+        points_set.add(new_point)
+    points = list(points_set)
     
     plot = Plot(x=MAX_X, y=MAX_Y, points=points)
     plot.showPlot()
