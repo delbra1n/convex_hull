@@ -33,7 +33,7 @@ class Plot:
         self.points.sort(key=lambda p: (p.x, p.y))
 
     def drawLine(self, p1:Point, p2:Point):
-        self.ax.plot([p1.x,p2.x], [p1.y, p2.y], 'ro-')
+        self.ax.plot([p1.x,p2.x], [p1.y, p2.y], 'ro--')
 
     def calculateDeterminant(self, p:Point, p1:Point, p2:Point):
         # p is the point that is checked, p1 and p2 are the points of the line
